@@ -19,7 +19,7 @@ namespace sql {
 		const std::string& op, 
 		const std::string& val
 	) {
-		return col + op + "'" + val + "'";
+		return col + op + val;
 		
 	}
 	
@@ -53,5 +53,9 @@ namespace sql {
 		const std::string& val
 	) {
 		return comparison(col, ">=", val);
+	}
+
+	std::string esc(const std::string& str) {
+		return "'" + str + "'";
 	}
 };

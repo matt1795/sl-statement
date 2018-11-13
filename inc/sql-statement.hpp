@@ -20,6 +20,8 @@ namespace sql {
 	const std::string LIKE = "LIKE";
 	const std::string IN = "IN";
 
+	std::string esc(const std::string& str);
+	
 	// comparison operators
 	std::string equal(const std::string& col, const std::string& val);
 	std::string notEqual(const std::string& col, const std::string& val);
@@ -83,6 +85,50 @@ namespace sql {
 		template <class ... Args>
 		Statement& where(Args ... args) {
 			buf << "WHERE ";
+			space(args...);
+			buf << std::endl;
+			return *this;
+		}
+		
+		// insert INSERT statement
+		template <class ... Args>
+		Statement& insertInto(const std::string& table, Args ... args) {
+			buf 
+				<< "INSERT INTO "
+				<< table << " (";
+
+			comma(args...);
+			buf << ") ";
+
+			buf << std::endl;
+			return *this;
+		}
+		
+		// insert Values statement
+		template <class ... Args>
+		Statement& values(Args ... args) {
+			buf << "VALUES (";
+			comma(args...);
+			buf << ")" << std::endl;
+			return *this;
+		}
+		
+		// insert delete from statement
+		Statement& deleteFrom(const std::string& table) {
+			buf << "DELETE FROM " << table << std::endl;
+			return *this;
+		}
+		
+		// insert update statement
+		Statement& update(const std::string& table) {
+			buf << "UPDATE " << table << std::endl;
+			return *this;
+		}
+		
+		// insert set statement
+		template <class ... Args>
+		Statement& set(Args ... args) {
+			buf << "SET ";
 			space(args...);
 			buf << std::endl;
 			return *this;
