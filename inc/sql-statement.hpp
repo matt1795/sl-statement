@@ -21,14 +21,14 @@ namespace sql {
 	const std::string IN = "IN";
 
 	std::string esc(const std::string& str);
-	
+
 	// comparison operators
 	std::string equal(const std::string& col, const std::string& val);
 	std::string notEqual(const std::string& col, const std::string& val);
 	std::string lessThan(const std::string& col, const std::string& val);
 	std::string greaterThan(const std::string& col, const std::string& val);
 	std::string lessThanOrEqual(const std::string& col, const std::string& val);
-	std::string greaterThanOrEqual(const std::string& col, 
+	std::string greaterThanOrEqual(const std::string& col,
 		const std::string& val);
 
 	// statement class
@@ -37,26 +37,26 @@ namespace sql {
 
 		// comma separated list
 		template <class T>
-		void comma(T& val) {
+		void comma(const T& val) {
 			buf << val;
 		}
 
 		// comma separeted list -- recursive
 		template <class T, class ... Args>
-		void comma(T& val, Args ... args) {
+		void comma(const T& val, Args ... args) {
 			buf << val << ",";
 			comma(args...);
 		}
-		
+
 		// comma separated list
 		template <class T>
-		void space(T& val) {
+		void space(const T& val) {
 			buf << val;
 		}
 
 		// comma separeted list -- recursive
 		template <class T, class ... Args>
-		void space(T& val, Args ... args) {
+		void space(const T& val, Args ... args) {
 			buf << val << " ";
 			space(args...);
 		}
@@ -71,7 +71,7 @@ namespace sql {
 			buf << std::endl;
 			return *this;
 		}
-		
+
 		// insert from statement
 		template <class ... Args>
 		Statement& from(Args ... args) {
@@ -80,7 +80,7 @@ namespace sql {
 			buf << std::endl;
 			return *this;
 		}
-		
+
 		// insert where statement
 		template <class ... Args>
 		Statement& where(Args ... args) {
@@ -89,11 +89,11 @@ namespace sql {
 			buf << std::endl;
 			return *this;
 		}
-		
+
 		// insert INSERT statement
 		template <class ... Args>
 		Statement& insertInto(const std::string& table, Args ... args) {
-			buf 
+			buf
 				<< "INSERT INTO "
 				<< table << " (";
 
@@ -103,7 +103,7 @@ namespace sql {
 			buf << std::endl;
 			return *this;
 		}
-		
+
 		// insert Values statement
 		template <class ... Args>
 		Statement& values(Args ... args) {
@@ -112,19 +112,19 @@ namespace sql {
 			buf << ")" << std::endl;
 			return *this;
 		}
-		
+
 		// insert delete from statement
 		Statement& deleteFrom(const std::string& table) {
 			buf << "DELETE FROM " << table << std::endl;
 			return *this;
 		}
-		
+
 		// insert update statement
 		Statement& update(const std::string& table) {
 			buf << "UPDATE " << table << std::endl;
 			return *this;
 		}
-		
+
 		// insert set statement
 		template <class ... Args>
 		Statement& set(Args ... args) {
@@ -133,7 +133,22 @@ namespace sql {
 			buf << std::endl;
 			return *this;
 		}
-		
+
+		// inner join statement
+		template <class T>
+		Statement& innerJoin(const T& table) {
+			buf << "INNER JOIN " << table << std::endl;
+			return *this;
+		}
+
+		// on statement
+		template <class T>
+		Statement& on(const T& bind) {
+			buf << "ON " << bind << std::endl;
+			return *this;
+		}
+
+
 		std::string str() {
 			return buf.str();
 		}
