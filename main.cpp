@@ -4,7 +4,7 @@
 // File Name: main.cpp
 // Date: 2018-11-11
 
-#include "../inc/sql-statement.hpp"
+#include "sql-statement.hpp"
 
 #include <iostream>
 #include <string>
