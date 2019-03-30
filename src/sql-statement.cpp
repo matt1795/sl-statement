@@ -6,7 +6,7 @@
 //
 // This class and functions help construct SQL Statements
 
-#include "../inc/sql-statement.hpp"
+#include "sql-statement.hpp"
 
 #include <iostream>
 #include <string>
