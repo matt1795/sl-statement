@@ -1,0 +1,13 @@
+language: cpp
+os:
+  - linux
+addons:
+  apt:
+    packages:
+      - cmake-data
+      - cmake
+script:
+  - mkdir build
+  - cd build
+  - cmake ..
+  - cmake --build .
