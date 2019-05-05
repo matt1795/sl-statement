@@ -19,6 +19,8 @@ namespace sql {
 	const std::string BETWEEN = "BETWEEN";
 	const std::string LIKE = "LIKE";
 	const std::string IN = "IN";
+	const std::string ASC = "ASC";
+	const std::string DESC = "DESC";
 
 	std::string esc(const std::string& str);
 
@@ -148,6 +150,12 @@ namespace sql {
 			return *this;
 		}
 
+		template <typename ... Args>
+		Statement& orderBy(Args ... args) {
+			buf << "ORDER BY ";
+			comma(args...);
+			buf << std::endl;
+		}
 
 		std::string str() {
 			return buf.str();
