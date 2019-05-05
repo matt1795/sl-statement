@@ -155,6 +155,7 @@ namespace sql {
 			buf << "ORDER BY ";
 			comma(args...);
 			buf << std::endl;
+			return *this;
 		}
 
 		std::string str() {
